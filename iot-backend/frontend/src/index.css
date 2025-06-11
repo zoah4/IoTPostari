@@ -22,7 +22,6 @@
     font-family: inherit;
   }
   
-  /* Body dodatno stiliziran */
   body {
     margin: 0;
     min-width: 320px;
@@ -31,9 +30,8 @@
     color: inherit;
   }
   
-  /* Header sa svijetlom pozadinom i malo paddinga */
   header {
-    background-color: #eef2ff; /* lagano plava pozadina */
+    background-color: #eef2ff; 
     padding: 20px 40px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     color: #222;
@@ -42,7 +40,6 @@
     justify-content: space-between;
   }
   
-  /* Header naslov */
   header h1 {
     margin: 0;
     font-weight: 700;
@@ -50,14 +47,12 @@
     color: #222;
   }
   
-  /* Navigacija u headeru */
   header nav {
     display: flex;
     align-items: center;
     gap: 20px;
   }
   
-  /* Linkovi u headeru */
   header nav a {
     font-weight: 600;
     color: #646cff;
@@ -70,7 +65,6 @@
     text-decoration: underline;
   }
   
-  /* Logout button u headeru */
   header nav button {
     border-radius: 8px;
     border: 1px solid transparent;
@@ -88,19 +82,17 @@
     border-color: #9b2c2c;
   }
   
-  /* Devices page container */
   .devices-page {
     padding: 40px;
     max-width: 900px;
     margin: 0 auto;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9; /* svijetla pozadina za content */
-    min-height: calc(100vh - 80px); /* oduzmi header visinu */
+    background-color: #f9f9f9; 
+    min-height: calc(100vh - 80px); 
     box-sizing: border-box;
     color: #222;
   }
   
-  /* Devices page naslov */
   .devices-page h1 {
     font-size: 2rem;
     margin-bottom: 24px;
@@ -108,21 +100,18 @@
     text-align: center;
   }
   
-  /* Kad nema uređaja */
   .no-devices {
     font-size: 1.2rem;
     text-align: center;
     color: #666;
   }
   
-  /* Lista uređaja */
   .devices-list {
     list-style: none;
     padding: 0;
     margin: 0;
   }
   
-  /* Svaki uređaj */
   .device-item {
     background-color: #fff;
     border-radius: 10px;
@@ -142,7 +131,6 @@
     box-shadow: 0 6px 12px rgba(102, 126, 234, 0.3);
   }
   
-  /* Status indikator */
   .status-indicator {
     display: inline-block;
     width: 14px;
@@ -153,14 +141,12 @@
     box-shadow: 0 0 6px rgba(229, 62, 62, 0.7);
   }
   
-  /* Heading style */
   h1 {
     font-size: 3.2em;
     line-height: 1.1;
     margin: 0 0 0.5em 0;
   }
   
-  /* Linkovi globalno */
   a {
     font-weight: 500;
     color: #646cff;
@@ -172,7 +158,6 @@
     text-decoration: underline;
   }
   
-  /* Dugmad globalno */
   button {
     border-radius: 8px;
     border: 1px solid transparent;

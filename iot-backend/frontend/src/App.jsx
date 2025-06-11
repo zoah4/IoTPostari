@@ -9,7 +9,6 @@ import Header from "./components/Header";
 const App = () => {
     const [token, setToken] = useState(() => localStorage.getItem("token") || null);
 
-    // Spremi token u localStorage kad se promijeni
     useEffect(() => {
         if (token) {
             localStorage.setItem("token", token);
@@ -20,7 +19,6 @@ const App = () => {
 
     const Layout = ({ children }) => {
         const location = useLocation();
-        // Ne prikazuj header na login stranici
         if (location.pathname === "/login") {
             return children;
         }
@@ -57,7 +55,7 @@ const App = () => {
                                     path="map"
                                     element={token ? <DeviceMap token={token} /> : <Navigate to="/login" />}
                                 />
-                                {/* Dodaj catch-all redirect ako treba */}
+                                {}
                                 <Route path="*" element={<Navigate to="/devices" />} />
                             </Routes>
                         </Layout>

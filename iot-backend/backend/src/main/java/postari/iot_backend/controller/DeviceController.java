@@ -17,25 +17,20 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    // 1️⃣ Dohvati sve uređaje za korisnika
     @GetMapping
     public ResponseEntity<JsonNode> getAllDevices(@RequestHeader("Authorization") String jwt) throws JsonProcessingException {
         JsonNode devices = deviceService.getDevices(jwt);
-        System.out.println(devices);
         return ResponseEntity.ok(devices);
     }
 
-    // 2️⃣ Dohvati latest telemetry za uređaj
     @GetMapping("/{deviceId}/telemetry/latest")
     public ResponseEntity<JsonNode> getLatestTelemetry(
             @RequestHeader("Authorization") String jwt,
             @PathVariable String deviceId) {
-        System.out.println("tu sam");
         JsonNode telemetry = deviceService.getLatestTelemetry(jwt, deviceId);
         return ResponseEntity.ok(telemetry);
     }
 
-    // 3️⃣ Dohvati povijest/statistiku za uređaj
     @GetMapping("/{deviceId}/telemetry/history")
     public ResponseEntity<JsonNode> getTelemetryHistory(
             @RequestHeader("Authorization") String jwt,
@@ -47,7 +42,6 @@ public class DeviceController {
         return ResponseEntity.ok(history);
     }
 
-    // 4️⃣ Dohvati obavijesti (alarms) za uređaj
     @GetMapping("/{deviceId}/notifications")
     public ResponseEntity<JsonNode> getDeviceNotifications(
             @RequestHeader("Authorization") String jwt,

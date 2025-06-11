@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getDeviceNotifications, getDeviceHistory, openDoor, getLatestTelemetry } from "../services/api";
-import NotificationItem from "../components/NotificationItem"; 
+import { getDevices, getDeviceNotifications, getDeviceHistory, openDoor, getLatestTelemetry } from "../services/api";
+import NotificationItem from "../components/NotificationItem";
 import HistoryItem from "../components/HistoryItem";
 import '../styles/NotificationsPage.css';
 
@@ -12,6 +12,7 @@ const NotificationsPage = ({ token: propToken }) => {
   const [token, setToken] = useState(propToken || null);
   const [timeRange, setTimeRange] = useState("7d");
   const [latestPostaValue, setLatestPostaValue] = useState(null);
+  const [deviceName, setDeviceName] = useState('');
 
   useEffect(() => {
     if (!token) {
@@ -24,6 +25,28 @@ const NotificationsPage = ({ token: propToken }) => {
       }
     }
   }, [token]);
+
+  useEffect(() => {
+    if (!token || !deviceId) return;
+  
+    getDevices(token)
+      .then((response) => {
+        const devices = response.data; 
+        if (!Array.isArray(devices)) {
+          console.error("Devices nije niz:", devices);
+          setDeviceName(`Uređaj ${deviceId}`);
+          return;
+        }
+        const device = devices.find(d => d.id?.id === deviceId);
+        setDeviceName(device?.name || `Uređaj ${deviceId}`);
+      })
+      .catch((err) => {
+        console.error("Greška pri dohvaćanju liste uređaja:", err);
+        setDeviceName(`Uređaj ${deviceId}`);
+      });
+  }, [token, deviceId]);
+  
+
 
   useEffect(() => {
     if (!token || !deviceId) return;
@@ -75,14 +98,13 @@ const NotificationsPage = ({ token: propToken }) => {
         const isOpen = postaValue.trim() === "true";
         setLatestPostaValue(isOpen);
 
-        // Ako se vrata zatvore, očisti obavijesti
         if (!isOpen) {
           setNotifications([]);
         }
       } catch (err) {
         console.error("Greška pri dohvaćanju latest telemetry:", err);
       }
-    }, 3000); // svake 3 sekunde
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, [token, deviceId]);
@@ -125,7 +147,7 @@ const NotificationsPage = ({ token: propToken }) => {
 
   return (
     <div className="notifications-page">
-      <h1>Obavijesti za uređaj ID: {deviceId}</h1>
+      <h1>Obavijesti za uređaj: {deviceName || deviceId}</h1>
       {(!notifications.length || latestPostaValue === false) ? (
         <p>Nema obavijesti.</p>
       ) : (
@@ -142,7 +164,7 @@ const NotificationsPage = ({ token: propToken }) => {
           Otključaj vrata
         </button>
       </div>
-      <h1>Povijest za uređaj ID: {deviceId}</h1>
+      <h1>Povijest dolaska pošte za uređaj: {deviceName || deviceId}</h1>
       <div className="time-range-container">
         <label htmlFor="timeRange">Vremenski raspon:</label>
         <select

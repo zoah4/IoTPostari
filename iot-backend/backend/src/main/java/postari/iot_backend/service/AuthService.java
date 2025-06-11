@@ -31,26 +31,17 @@ public class AuthService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         try {
-            // Pretvaranje payloada u JSON
             String payload = objectMapper.writeValueAsString(Map.of(
                     "username", username,
                     "password", password
             ));
 
-            //System.out.println("url: " + url);
-            //System.out.println("payload: " + payload);
-
             HttpEntity<String> request = new HttpEntity<>(payload, headers);
-
-            //System.out.println("request: " + request);
 
             ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
 
-            //System.out.println("response: " + response);
-
             if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
                 JsonNode responseBody = objectMapper.readTree(response.getBody());
-                //System.out.println("responseBody: " + responseBody);
                 if (responseBody.has("token")) {
                     return responseBody.get("token").asText();
                 } else {
@@ -60,7 +51,6 @@ public class AuthService {
                 throw new RuntimeException("Prijava nije uspjela. Status: " + response.getStatusCode());
             }
         } catch (HttpClientErrorException e) {
-            // Ako ThingsBoard vrati 401, 403, itd.
             throw new RuntimeException("Neuspješna prijava: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
         } catch (Exception e) {
             throw new RuntimeException("Greška tijekom prijave: " + e.getMessage(), e);
@@ -83,7 +73,6 @@ public class AuthService {
     }
 
     public JsonNode getCurrentUser(String jwt) {
-        //System.out.println("jwt: " + jwt);
         String url = thingsboardApiUrl + "/auth/user";
 
         if (jwt.startsWith("Bearer ")) {
@@ -94,9 +83,7 @@ public class AuthService {
         headers.setBearerAuth(jwt);
 
         HttpEntity<Void> request = new HttpEntity<>(headers);
-        //System.out.println("request2: " + request);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
-        //System.out.println("response2: " + response);
         return parseJson(response.getBody());
     }
 

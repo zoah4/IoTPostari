@@ -28,7 +28,6 @@ public class AuthController {
             return ResponseEntity.ok(Map.of("token", jwt));
         } catch (RuntimeException e) {
             String message = e.getMessage() != null ? e.getMessage() : "Greška pri autentikaciji.";
-            // Ako želiš detaljnije, možeš analizirati poruku da vidiš je li 401 (Unauthorized) ili 500 (Internal Server Error)
             if (message.toLowerCase().contains("neuspješna prijava") || message.toLowerCase().contains("unauthorized")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", message));
             }

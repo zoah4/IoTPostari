@@ -12,10 +12,10 @@ const Header = ({ onLogout }) => {
 
   return (
     <header>
-      <h1>IoT Dashboard</h1>
+      <h1>Poštari</h1>
       <nav>
-        <Link to="/devices">Devices Page</Link>
-        <Link to="/map">Device Map</Link>
+        <Link to="/devices">Uređaji</Link>
+        <Link to="/map">Karta uređaja</Link>
         <button onClick={handleLogout}>Logout</button>
       </nav>
     </header>

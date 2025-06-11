@@ -16,9 +16,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors() // omogući CORS
+                .cors() 
                 .and()
-                .csrf().disable() // ako koristiš JWT, inače ostavi enable
+                .csrf().disable()
                 .authorizeHttpRequests(authz -> authz
                         .anyRequest().permitAll()
                 );

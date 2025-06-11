@@ -10,7 +10,7 @@ const NotificationItem = ({ notif }) => {
       <strong>{notif.subject}</strong>
       <p>{notif.text}</p>
       <p className="text-sm text-gray-600">
-        Device ID: {notif.info?.msgOriginator?.id || "N/A"}
+        Device ID: {notif.info?.msgOriginator?.name || "N/A"}
       </p>
       <small>{new Date(notif.createdTime).toLocaleString()}</small>
     </li>

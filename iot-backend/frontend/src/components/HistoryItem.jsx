@@ -1,7 +1,6 @@
 import React from "react";
 
 const HistoryItem = ({ history }) => {
-  // history = { key: "posta", ts: 1749496048139, value: "true" }
 
   return (
     <li

@@ -1,4 +1,3 @@
-/* Root container */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -8,12 +7,11 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: #f9fafb; /* lagana svijetla pozadina */
+  background-color: #f9fafb; 
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
 
-/* Logo styling */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -28,7 +26,6 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-/* Animacija loga */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -44,7 +41,6 @@
   }
 }
 
-/* Card styling */
 .card {
   padding: 2em;
   background-color: white;
@@ -57,25 +53,22 @@
   text-align: left;
 }
 
-/* Read the docs link */
 .read-the-docs {
   color: #888;
 }
 
-/* Crvena točkica (status indicator) */
 .red-dot {
   display: inline-block;
   width: 10px;
   height: 10px;
   background-color: red;
   border-radius: 50%;
-  margin-left: 8px; /* razmak od imena uređaja */
+  margin-left: 8px; 
   vertical-align: middle;
   box-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
   animation: pulse 1.5s infinite;
 }
 
-/* Pulsirajuća animacija za status */
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -91,7 +84,6 @@
   }
 }
 
-/* Responsivni padding za manje ekrane */
 @media (max-width: 600px) {
   #root {
     padding: 1rem;

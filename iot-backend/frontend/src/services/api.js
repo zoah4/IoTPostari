@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8080/api"; // zamijeni s tvojim backend URL-om
+const API_BASE_URL = "http://localhost:8080/api"; 
 
 export const login = async (username, password) => {
     const response = await axios.post(`${API_BASE_URL}/auth/login`, { username, password });
@@ -24,7 +24,7 @@ export const getDeviceNotifications = async (token, deviceId) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        return response.data; // vraća podatke direktno
+        return response.data; 
     } catch (err) {
         console.error("Greška pri dohvaćanju obavijesti:", err);
         throw err;

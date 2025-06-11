@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-//@RequiredArgsConstructor
 public class DeviceService {
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -34,17 +33,12 @@ public class DeviceService {
     }
 
     public JsonNode getDevices(String jwt) {
-        // Prvo dohvatimo korisnika
         JsonNode userNode = authService.getCurrentUser(jwt);
-        System.out.println(userNode);
         if (jwt.startsWith("Bearer ")) {
             jwt = jwt.substring(7);
         }
-        // Dohvati rolu
         String authority = userNode.get("authority").asText();
-        System.out.println("Uloga korisnika: " + authority);
 
-        // Sad napravi poziv za dohvat uređaja
         String url;
         if ("CUSTOMER_USER".equals(authority)) {
             String customerId = userNode.get("customerId").get("id").asText();
@@ -65,10 +59,8 @@ public class DeviceService {
             jwt = jwt.substring(7);
         }
         String url = thingsboardApiUrl + "/plugins/telemetry/DEVICE/" + deviceId + "/values/timeseries";
-        System.out.println(url);
         HttpEntity<Void> entity = new HttpEntity<>(createHeaders(jwt));
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        System.out.println(response.getBody());
         return parseJson(response.getBody());
     }
 
@@ -84,18 +76,12 @@ public class DeviceService {
     }
 
     public JsonNode getDeviceNotifications(String jwt, String deviceId) {
-        //String url = thingsboardApiUrl + "/alarm/DEVICE/" + deviceId + "?alarmType=RULE_NODE_ALARM&pageSize=10&page=1";
-        //String url = thingsboardApiUrl + "/alarm?limit=20&sortProperty=startTs&sortOrder=DESC";
-        String url = thingsboardApiUrl + "/notifications?pageSize=1000&page=0&sort=createdTime,desc&originatorEntityType=DEVICE&originatorId=" + deviceId;
-        //System.out.println("jwt: " + jwt);
+       String url = thingsboardApiUrl + "/notifications?pageSize=1000&page=0&sort=createdTime,desc&originatorEntityType=DEVICE&originatorId=" + deviceId;
         if (jwt.startsWith("Bearer ")) {
             jwt = jwt.substring(7);
         }
         HttpEntity<Void> entity = new HttpEntity<>(createHeaders(jwt));
-        //ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        System.out.println(response.getBody());
-
         JsonNode allNotifications = parseJson(response.getBody());
         ArrayNode dataArray = (ArrayNode) allNotifications.get("data");
 
