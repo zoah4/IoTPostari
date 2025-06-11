@@ -1,0 +1,59 @@
+.devices-page {
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  .devices-page h1 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .no-devices {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #666;
+  }
+  
+  .devices-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .device-item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    padding: 18px 24px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1.1rem;
+    color: #222;
+  }
+  
+  .device-item:hover {
+    background-color: #eef2ff;
+    box-shadow: 0 6px 12px rgba(102, 126, 234, 0.3);
+  }
+  
+  .status-indicator {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: #e53e3e; 
+    border-radius: 50%;
+    margin-left: 12px;
+    box-shadow: 0 0 6px rgba(229, 62, 62, 0.7);
+  }
+  

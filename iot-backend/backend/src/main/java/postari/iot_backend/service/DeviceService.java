@@ -19,9 +19,9 @@ public class DeviceService {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final AuthService authService;
 
-    public DeviceService(AuthService authService) {
-        this.authService = authService;
-    }
+    //public DeviceService(AuthService authService) {
+    //    this.authService = authService;
+    //}
 
     @Value("${thingsboard.api.url}")
     private String thingsboardApiUrl;

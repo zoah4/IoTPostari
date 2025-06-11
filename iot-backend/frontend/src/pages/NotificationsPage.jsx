@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getDeviceNotifications, getDeviceHistory, openDoor, getLatestTelemetry } from "../services/api";
 import NotificationItem from "../components/NotificationItem"; 
 import HistoryItem from "../components/HistoryItem";
-import Header from "../components/Header";
+import '../styles/NotificationsPage.css';
 
 const NotificationsPage = ({ token: propToken }) => {
   const { deviceId } = useParams();
@@ -44,17 +44,14 @@ const NotificationsPage = ({ token: propToken }) => {
 
     getDeviceHistory(token, deviceId, startTs, endTs)
       .then((data) => {
-        const allItems = data.posta;
-        console.log(allItems)
+        const allItems = data.posta || [];
         const trueItems = allItems.filter(item => item.value === 'true');
-        console.log(trueItems)
-
         setHistory(trueItems);
       })
       .catch((err) => {
         console.error("Greška pri dohvaćanju povijesti:", err);
       });
-  }, [token, deviceId]);
+  }, [token, deviceId, timeRange]);
 
   useEffect(() => {
     if (!token || !deviceId) return;
@@ -62,7 +59,6 @@ const NotificationsPage = ({ token: propToken }) => {
       .then((data) => {
         const postaValue = data.posta && data.posta.length > 0 ? data.posta[0].value : "false";
         setLatestPostaValue(postaValue.trim() === "true");
-        console.log(latestPostaValue)
       })
       .catch((err) => {
         console.error("Greška pri dohvaćanju latest telemetry:", err);
@@ -73,35 +69,28 @@ const NotificationsPage = ({ token: propToken }) => {
     if (!token || !deviceId) return;
 
     const intervalId = setInterval(async () => {
-        try {
+      try {
         const data = await getLatestTelemetry(token, deviceId);
         const postaValue = data.posta && data.posta.length > 0 ? data.posta[0].value : "false";
         const isOpen = postaValue.trim() === "true";
         setLatestPostaValue(isOpen);
 
-        // Ako se vrata zatvore (postaValue == false), očisti obavijesti
+        // Ako se vrata zatvore, očisti obavijesti
         if (!isOpen) {
-            setNotifications([]); // briše sve obavijesti
+          setNotifications([]);
         }
-        } catch (err) {
+      } catch (err) {
         console.error("Greška pri dohvaćanju latest telemetry:", err);
-        }
-    }, 3000); // provjerava svake 3 sekunde
+      }
+    }, 3000); // svake 3 sekunde
 
-    return () => clearInterval(intervalId); // očisti interval kad komponenta unmounta
+    return () => clearInterval(intervalId);
   }, [token, deviceId]);
-
 
   const handleOpenDoor = async (notif) => {
     try {
-      console.log(notif)
-      console.log("Otključavanje vrata uređaja: ", notif.id);
-      // Ovdje možeš pozvati backend API za potvrdu:
+      console.log("Otključavanje vrata uređaja:", notif.id);
       await openDoor(token, deviceId);
-      // Ili samo setati lokalno open state itd.
-      // Za primjer:
-      console.log(latestPostaValue)
-
     } catch (err) {
       console.error("Greška pri potvrđivanju:", err);
     }
@@ -110,73 +99,72 @@ const NotificationsPage = ({ token: propToken }) => {
   const calculateTimeRange = (range) => {
     const now = new Date();
     const end = new Date(now);
-    end.setHours(23, 59, 59, 999); // kraj dana
+    end.setHours(23, 59, 59, 999);
 
     const start = new Date(end);
 
     switch (range) {
-        case "7d":
+      case "7d":
         start.setDate(start.getDate() - 7);
         start.setHours(0, 0, 0, 0);
         break;
-        case "30d":
+      case "30d":
         start.setDate(start.getDate() - 30);
         start.setHours(0, 0, 0, 0);
         break;
-        default:
+      default:
         start.setDate(start.getDate() - 7);
         start.setHours(0, 0, 0, 0);
     }
 
     return {
-        startTs: start.getTime(), // milisekunde
-        endTs: end.getTime()
+      startTs: start.getTime(),
+      endTs: end.getTime()
     };
   };
 
-
   return (
-    <div className="p-8">
-      <Header/>
-      <h1 className="text-2xl font-bold mb-4">
-        Obavijesti za uređaj ID: {deviceId}
-      </h1>
-      {notifications.length === 0 || latestPostaValue === false ? (
+    <div className="notifications-page">
+      <h1>Obavijesti za uređaj ID: {deviceId}</h1>
+      {(!notifications.length || latestPostaValue === false) ? (
         <p>Nema obavijesti.</p>
       ) : (
         <ul className="space-y-2">
           {notifications.map((notif) => (
-            <NotificationItem key={notif.id?.id || notif.id} notif={notif} openDoor={handleOpenDoor}/>
+            <li key={notif.id?.id || notif.id} className="notification-item">
+              <NotificationItem notif={notif} openDoor={handleOpenDoor} />
+            </li>
           ))}
         </ul>
       )}
-      <h1 className="text-2xl font-bold mb-4">
-        Povijest za uređaj ID: {deviceId}
-      </h1>
-      <div className="mb-4">
-        <label htmlFor="timeRange" className="mr-2 font-semibold">Vremenski raspon:</label>
+
+      <h1>Povijest za uređaj ID: {deviceId}</h1>
+      <div className="time-range-container">
+        <label htmlFor="timeRange">Vremenski raspon:</label>
         <select
-            id="timeRange"
-            value={timeRange}
-            onChange={(e) => setTimeRange(e.target.value)}
-            className="border rounded p-2"
+          id="timeRange"
+          value={timeRange}
+          onChange={(e) => setTimeRange(e.target.value)}
         >
-            <option value="7d">Zadnjih 7 dana</option>
-            <option value="30d">Zadnjih 30 dana</option>
+          <option value="7d">Zadnjih 7 dana</option>
+          <option value="30d">Zadnjih 30 dana</option>
         </select>
       </div>
+
       {history.length === 0 ? (
         <p>Nema povijesti.</p>
       ) : (
         <div>
-            <ul className="space-y-2">
-            {history.map((history) => (
-                <HistoryItem key={history.ts} history={history}/>
+          <ul className="space-y-2">
+            {history.map((historyItem) => (
+              <li key={historyItem.ts} className="history-item">
+                <HistoryItem history={historyItem} />
+              </li>
             ))}
-            </ul>
-            <p className="mb-4">
-                Ukupan broj zapisa: <strong>{history.length}</strong>
-            </p>
+          </ul>
+          <p className="mb-4">
+            Ukupan broj zapisa: <strong>{history.length}</strong>
+          </p>
         </div>
       )}
     </div>

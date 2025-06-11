@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDevices, getLatestTelemetry } from "../services/api";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-//import "../App.css"
+import '../styles/DevicesPage.css';  
 
 const DevicesPage = ({ token: propToken }) => {
     const [devices, setDevices] = useState([]);
@@ -27,7 +26,7 @@ const DevicesPage = ({ token: propToken }) => {
 
         getDevices(token)
             .then((data) => {
-                setDevices(data.data || []); // pretpostavka da API vraća { data: [...] }
+                setDevices(data.data || []); 
             })
             .catch((err) => {
                 console.error("Greška pri dohvaćanju uređaja:", err);
@@ -36,18 +35,15 @@ const DevicesPage = ({ token: propToken }) => {
 
     useEffect(() => {
         if (!token || devices.length === 0) return;
-        console.log(devices)
+
         devices.forEach((device) => {
             getLatestTelemetry(token, device.id.id)
             .then((data) => {
                 const postaValue = data.posta && data.posta.length > 0 ? data.posta[0].value : "false";
-                console.log(".", postaValue, ".")
-                console.log(postaValue.trim() === "true")
                 setDeviceStatuses((prev) => ({
-                ...prev,
-                [device.id.id]: postaValue.trim() === "true"
+                    ...prev,
+                    [device.id.id]: postaValue.trim() === "true"
                 }));
-                console.log(deviceStatuses)
             })
             .catch((err) => {
                 console.error(`Greška pri dohvaćanju telemetry za uređaj ${device.id.id}:`, err);
@@ -55,38 +51,25 @@ const DevicesPage = ({ token: propToken }) => {
         });
     }, [token, devices]);
 
-    useEffect(() => {
-        console.log("deviceStatuses updated:", deviceStatuses);
-        console.log(deviceStatuses["c1678c90-3c04-11f0-a544-db21b46190ed"])
-    }, [deviceStatuses]);
-
     const handleDeviceClick = (deviceId) => {
         navigate(`/notifications/${deviceId}`);
     };
 
     return (
-        <div className="p-8">
-            <Header />
-            <h1 className="text-2xl font-bold mb-4">Lista uređaja</h1>
+        <div className="devices-page">
+            <h1>Lista uređaja</h1>
             {devices.length === 0 ? (
-                <p>Nema uređaja.</p>
+                <p className="no-devices">Nema uređaja.</p>
             ) : (
-                <ul className="space-y-2">
+                <ul className="devices-list">
                     {devices.map((device) => (
                         <li
                             key={device.id.id}
-                            className="p-4 border rounded shadow hover:bg-gray-100 cursor-pointer"
+                            className="device-item"
                             onClick={() => handleDeviceClick(device.id.id)}
                         >
-                            <strong>{device.name}</strong> (ID: {device.id.id}) {deviceStatuses[device.id.id] && (
-                                <span style={{display: "inline-block",
-                                    width: "10px",         
-                                    height: "10px",
-                                    backgroundColor: "red",
-                                    borderRadius: "50%",
-                                    marginLeft: "8px"}}></span>
-                              )}
-                            
+                            <strong>{device.name}</strong> (ID: {device.id.id}) 
+                            {deviceStatuses[device.id.id] && <span className="status-indicator"></span>}
                         </li>
                     ))}
                 </ul>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import '../styles/Header.css'; 
 
 const Header = ({ onLogout }) => {
   const navigate = useNavigate();
@@ -10,27 +11,12 @@ const Header = ({ onLogout }) => {
   };
 
   return (
-    <header
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: "1rem",
-        borderBottom: "1px solid #ccc",
-        paddingBottom: "0.5rem",
-      }}
-    >
-      <h1 className="text-2xl font-bold">IoT Dashboard</h1>
+    <header>
+      <h1>IoT Dashboard</h1>
       <nav>
-        <Link to="/devices" style={{ marginRight: "1rem" }}>
-          Devices Page
-        </Link>
-        <Link to="/map" style={{ marginRight: "1rem" }}>
-          Device Map
-        </Link>
-        <button onClick={handleLogout} style={{ color: "red" }}>
-          Logout
-        </button>
+        <Link to="/devices">Devices Page</Link>
+        <Link to="/map">Device Map</Link>
+        <button onClick={handleLogout}>Logout</button>
       </nav>
     </header>
   );

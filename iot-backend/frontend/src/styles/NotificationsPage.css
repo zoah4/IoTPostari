@@ -1,0 +1,83 @@
+.notifications-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    box-sizing: border-box;
+    color: #333;
+  }
+  
+  .notifications-page h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #2c3e50;
+  }
+  
+  .notifications-page p {
+    font-size: 1.1rem;
+    text-align: center;
+    color: #777;
+    margin-bottom: 24px;
+  }
+  
+  .time-range-container {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .time-range-container label {
+    font-weight: 600;
+    margin-right: 10px;
+    color: #555;
+  }
+  
+  .time-range-container select {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+    min-width: 150px;
+  }
+  
+  .time-range-container select:hover,
+  .time-range-container select:focus {
+    border-color: #667eea;
+    outline: none;
+  }
+  
+  ul.space-y-2 {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 700px;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+  
+  
+  .notification-item,
+  .history-item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    transition: box-shadow 0.3s ease;
+    cursor: default;
+  }
+  
+  .notification-item:hover {
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    cursor: pointer;
+  }
+  
