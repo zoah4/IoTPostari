@@ -132,12 +132,16 @@ const NotificationsPage = ({ token: propToken }) => {
         <ul className="space-y-2">
           {notifications.map((notif) => (
             <li key={notif.id?.id || notif.id} className="notification-item">
-              <NotificationItem notif={notif} openDoor={handleOpenDoor} />
+              <NotificationItem notif={notif} />
             </li>
           ))}
         </ul>
       )}
-
+      <div className="button-container">
+        <button onClick={() => handleOpenDoor(deviceId)}>
+          Otključaj vrata
+        </button>
+      </div>
       <h1>Povijest za uređaj ID: {deviceId}</h1>
       <div className="time-range-container">
         <label htmlFor="timeRange">Vremenski raspon:</label>

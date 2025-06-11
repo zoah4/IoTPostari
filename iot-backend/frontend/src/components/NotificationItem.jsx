@@ -1,6 +1,6 @@
 import React from "react";
 
-const NotificationItem = ({ notif, openDoor }) => {
+const NotificationItem = ({ notif }) => {
     console.log(notif.info?.msgOriginator?.id)
   return (
     <li
@@ -13,14 +13,6 @@ const NotificationItem = ({ notif, openDoor }) => {
         Device ID: {notif.info?.msgOriginator?.id || "N/A"}
       </p>
       <small>{new Date(notif.createdTime).toLocaleString()}</small>
-      <div className="mt-2">
-        <button
-          onClick={() => openDoor(notif.info?.msgOriginator?.id)}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Otključaj vrata
-        </button>
-      </div>
     </li>
   );
 };

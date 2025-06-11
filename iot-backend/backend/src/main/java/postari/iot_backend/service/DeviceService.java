@@ -12,16 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class DeviceService {
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final AuthService authService;
 
-    //public DeviceService(AuthService authService) {
-    //    this.authService = authService;
-    //}
+    public DeviceService(AuthService authService) {
+        this.authService = authService;
+    }
 
     @Value("${thingsboard.api.url}")
     private String thingsboardApiUrl;
