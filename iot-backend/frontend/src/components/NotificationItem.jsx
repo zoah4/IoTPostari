@@ -1,7 +1,6 @@
 import React from "react";
 
 const NotificationItem = ({ notif }) => {
-    console.log(notif.info?.msgOriginator?.id)
   return (
     <li
       key={notif.id?.id || notif.id}
@@ -10,7 +9,7 @@ const NotificationItem = ({ notif }) => {
       <strong>{notif.subject}</strong>
       <p>{notif.text}</p>
       <p className="text-sm text-gray-600">
-        Device ID: {notif.info?.msgOriginator?.name || "N/A"}
+        Device ID: {notif.info?.msgOriginator?.id || "N/A"}
       </p>
       <small>{new Date(notif.createdTime).toLocaleString()}</small>
     </li>

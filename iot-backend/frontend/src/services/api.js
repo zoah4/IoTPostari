@@ -38,8 +38,6 @@ export const getLatestTelemetry = async (token, deviceId) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        console.log(response)
-        console.log(response.data)
         return response.data;
     } catch(err) {
         console.log("Greška prilikom dohvaćanja telemetry podataka")
@@ -59,7 +57,6 @@ export const getDeviceHistory = async (token, deviceId, startTs, endTs, limit = 
                 limit
             }
         });
-        console.log(response)
         return response.data;
     } catch(err) {
         console.log("Greška prilikom dohvaćanja history podataka")
