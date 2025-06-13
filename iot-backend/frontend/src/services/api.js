@@ -77,7 +77,7 @@ export const openDoor = async (token, deviceId) => {
     );
     return response.data;
   } catch (err) {
-    console.error("Greška pri potvrđivanju obavijesti:", err);
+    console.error("Greška pri otključavanju vrata:", err);
     throw err;
   }
 };
